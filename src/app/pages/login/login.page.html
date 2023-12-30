@@ -25,19 +25,32 @@
     <ion-card class="form-wrapper">
       <ion-card-content>
 
+      <form [formGroup]="form" (ngSubmit)="submit()" (keypress.enter)="submit()">
         <ion-item>
             <ion-icon name="mail"></ion-icon>
-            <ion-input style="color: black;" type="text" placeholder="Email"></ion-input>
+            <ion-input autocomplete="Email" [formControl]="form.controls.email" style="color: black;" type="text" placeholder="Email"></ion-input>
         </ion-item>
+
+        <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
+          <div *ngIf="form.controls.email.errors?.['required']">Se necesita el correo</div>
+          <div *ngIf="form.controls.email.errors?.['email']">Ingrese un correo valido</div>
+        </div>
 
         <ion-item>
             <ion-icon name="lock-closed"></ion-icon>
-            <ion-input style="color: black;" type="password" placeholder="Contrasena"></ion-input>
+            <ion-input autocomplete="password" [formControl]="form.controls.password" style="color: black;" type="password" placeholder="Contrasena"></ion-input>
         </ion-item>
 
-        <ion-button expand="block" style="background-color: #ea8501;">
+        <div class="validators" *ngIf="form.controls.password.errors && form.controls.password.touched">
+          <div *ngIf="form.controls.password.errors?.['required']">Se necesita una contraseña</div>
+        </div>
+
+        <ion-button class="submit" type="submit" expand="block" [disabled]="form.invalid">
           Iniciar sesión
         </ion-button>
+
+      </form>
+
       </ion-card-content>
     </ion-card>
     

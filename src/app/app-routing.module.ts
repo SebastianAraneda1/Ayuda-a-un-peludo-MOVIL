@@ -22,7 +22,19 @@ const routes: Routes = [
   {
     path: 'recuperar-contra',
     loadChildren: () => import('./pages/recuperar-contra/recuperar-contra.module').then( m => m.RecuperarContraPageModule)
+  },  {
+    path: 'inicio',
+    loadChildren: () => import('./pages/contenido/inicio/inicio.module').then( m => m.InicioPageModule)
   },
+  {
+    path: 'perros',
+    loadChildren: () => import('./pages/contenido/perros/perros.module').then( m => m.PerrosPageModule)
+  },
+  {
+    path: 'gatos',
+    loadChildren: () => import('./pages/contenido/gatos/gatos.module').then( m => m.GatosPageModule)
+  },
+
 ];
 
 @NgModule({

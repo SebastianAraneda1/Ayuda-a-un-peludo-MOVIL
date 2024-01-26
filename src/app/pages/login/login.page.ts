@@ -2,6 +2,7 @@ import { Component, Input, OnInit, inject } from '@angular/core';
 import { Form, FormControl, FormGroup, Validators } from '@angular/forms';
 import { user } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-login',
@@ -16,14 +17,36 @@ export class LoginPage implements OnInit {
   });
 
   firebaseSvc = inject(FirebaseService);
+  utilSvc = inject(UtilsService);
 
   ngOnInit() {
   }
 
-  submit(){
-    this.firebaseSvc.iniciarSesion(this.form.value as user).then(response => {
-      console.log(response);
-    })
+  async submit(){
+
+    if(this.form.valid){
+
+      const cargando = await this.utilSvc.cargando();
+      
+      await cargando.present();
+
+      this.firebaseSvc.iniciarSesion(this.form.value as user).then(response => {
+        console.log(response);
+      }).catch(error =>{
+        console.log(error);
+        this.utilSvc.presentarToast({
+          message: error.message,
+          duration: 2000,
+          color: 'danger',
+          position: 'middle',
+          icon: 'alert-circle-outline'
+        });
+
+      }).finally(() => {
+        cargando.dismiss();
+      })
+
+    }
   }
 
 }

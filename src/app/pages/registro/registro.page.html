@@ -33,7 +33,7 @@
 
           <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
             <div *ngIf="form.controls.name.errors?.['required']">Se necesita un nombre</div>
-            <div *ngIf="form.controls.name.errors?.['name']">Ingrese un nombre valido</div>
+            <div *ngIf="form.controls.name.errors?.['minlength']">El nombre debe tener 3 caracteres por lo menos</div>
           </div>  
 
           <ion-item>
